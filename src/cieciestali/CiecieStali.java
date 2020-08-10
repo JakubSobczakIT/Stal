@@ -28,6 +28,7 @@ import javax.swing.*;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileFilter;
 
 
@@ -43,22 +44,53 @@ import jxl.read.biff.BiffException;
  * @author Kuba
  */
 public class CiecieStali extends JFrame {
+    
     public Vector<JTextField> vIlosc;
     public Vector<JTextField> vDlugosc;
+    public Vector<JTextField> vPozycja;
+    public Vector<JTextField> vSkos;
+    public Vector<JTextField> vSkosKat;
+    public Vector<JTextField> vSkosPlaszczyzna;
+    public Vector<JTextField> vSkosK;
+    public Vector<JTextField> vSkosKatK;
+    public Vector<JTextField> vSkosPlaszczyznaK;
+    public Vector<JCheckBox> vCheckBox;
+    public Vector<JLabel> vLp;
+    public Vector<JLabel> vX;
+    
     public Vector<JTextField> vIloscM;
     public Vector<JTextField> vDlugoscM;
+    public Vector<JTextField> vGatunekM;
+    public Vector<JCheckBox> vCheckBoxM;
+    public Vector<JLabel> vLpM;
+    public Vector<JLabel> vXM;
+    
     File plikXls;
     private int iloscPol =0;
     private int iloscPolM =0;
-    private int szerPane = 300;
+    private int szerPane = 650;
     private int wysPane = 500;
     public CiecieStali() {
         super("CięcieStali");
         vIlosc = new Vector();
         vDlugosc = new Vector();
+        vPozycja = new Vector();
+        vX = new Vector();
+        vLp = new Vector();
+        vSkos = new Vector();
+        vSkosKat = new Vector();
+        vSkosPlaszczyzna = new Vector();
+        vSkosK = new Vector();
+        vSkosKatK = new Vector();
+        vSkosPlaszczyznaK = new Vector();
+        vCheckBox = new Vector();
         vIloscM = new Vector();
         vDlugoscM = new Vector();
-        this.setBounds(500,150,550,550);
+        vGatunekM = new Vector();
+        vCheckBoxM = new Vector();
+        vXM = new Vector();
+        vLpM= new Vector ();
+        this.setBounds(500,150,szerPane+260,wysPane+50);
         this.setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("stal.jpg"));
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -74,7 +106,7 @@ public class CiecieStali extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel("x");
         jPanel2 = new javax.swing.JPanel();
         bDodajElem = new javax.swing.JButton();
         bUsunOstatni = new javax.swing.JButton();
@@ -85,16 +117,36 @@ public class CiecieStali extends JFrame {
         jPanel3 = new javax.swing.JPanel();
         label_IloscM = new javax.swing.JLabel();
         label_dlugoscM = new javax.swing.JLabel();
+        label_gatunekM = new JLabel();
+        label_material = new JLabel("Nazwa materiału");
+        label_inwestycja = new JLabel("Nazwa inwestycji");
+        label_przekroj = new JLabel("Przekroj materiału");
+        jMaterial = new JTextField();
+        jInwestycja = new JTextField();
+        jPrzekrojX = new JTextField();
+        jPrzekrojY = new JTextField();
         lpM = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         label_Ilosc = new javax.swing.JLabel();
         label_dlugosc = new javax.swing.JLabel();
+        label_pozycja = new JLabel();
+        label_skos = new JLabel();
+        label_skosPlaszczyzna = new JLabel();
+        label_skosKat = new JLabel();
+        label_skosK = new JLabel();
+        label_skosPlaszczyznaK = new JLabel();
+        label_skosKatK = new JLabel();
         lp = new javax.swing.JLabel();
+        check = new JCheckBox();
+        checkM = new JCheckBox();
         jPanelF = new JPanel();
         filePath = new JFileChooser();
         scrollPaneM = new JScrollPane(jPanel3);
         scrollPane = new JScrollPane(jPanel1);  
-        jLabel1.setText("Ilość");
+       
+        
+        
+        
         jPanel2.setLayout(null);
         bDodajElem.setText("Dodaj element");
         bDodajElem.setBounds(szerPane+60,25,170,25);
@@ -146,56 +198,107 @@ public class CiecieStali extends JFrame {
                 bWyznaczActionPerformed(evt);
             }
         });
-
-        /*konstrukcja panelu do wypelnainia danych*/
+        checkM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkMStateChanged(evt);
+            }
+        });
+        check.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkStateChanged(evt);
+            }
+        });
+    
         jPanel3.setLayout(null);
         jTabbedPane1.setBounds(0, 0, szerPane+50, wysPane);
         jPanel3.setBounds(0,0,szerPane,wysPane);
+        label_inwestycja.setBounds(350, 5, 100, 25);
+        jPanel3.add(label_inwestycja);
+        jInwestycja.setBounds(350, 35, 100, 27);
+        jPanel3.add(jInwestycja);
+        label_material.setBounds(350, 65, 100, 25);
+        jPanel3.add(label_material);
+        jMaterial.setBounds(350, 95, 100, 27);
+        jPanel3.add(jMaterial);
+        label_przekroj.setBounds(350, 125, 100, 25);
+        jPanel3.add(label_przekroj);
+        jPrzekrojX.setBounds(350, 155, 40, 27);
+        jPanel3.add(jPrzekrojX);
+        jLabel1.setBounds(393,155,10,27);
+        jPanel3.add(jLabel1);
+        jPrzekrojY.setBounds(400, 155, 40, 27);
+        jPanel3.add(jPrzekrojY);
+        
+        checkM.setBounds(5, 5, 50, 25);
+        jPanel3.add(checkM);
         lpM.setText("Lp.");
-        lpM.setBounds(5, 5, 30, 25);
+        lpM.setBounds(30, 5, 30, 25);
         jPanel3.add(lpM);
-        label_IloscM.setText("Ilość elementów");
-        label_IloscM.setBounds(35, 5, 100, 25);
+        label_IloscM.setText("Ilość");
+        label_IloscM.setBounds(60, 5, 50, 25);
         jPanel3.add(label_IloscM);
-        label_dlugoscM.setText("Długość elementów [mm]");
-        label_dlugoscM.setBounds(135, 5, 200, 25);
+        label_dlugoscM.setText("Długość [mm]");
+        label_dlugoscM.setBounds(125, 5, 100, 25);
         jPanel3.add(label_dlugoscM);
-        jPanel3.setPreferredSize(new Dimension(300, 500));
+        label_gatunekM.setText("Gatunek");
+        label_gatunekM.setBounds(240,5,50,25);
+        jPanel3.add(label_gatunekM);
+
+        jPanel3.setPreferredSize(new Dimension(szerPane, wysPane));
         scrollPaneM.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPaneM.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPaneM.setBounds(0, 0, 350, 500);
-        scrollPaneM.setPreferredSize(new Dimension(350, 500));
+        scrollPaneM.setPreferredSize(new Dimension(szerPane+50, wysPane));
         jTabbedPane1.addTab("Materiał", scrollPaneM);
         //
         //
-        /*konstrukcja panelu do wypelnainia danych*/
+        /*konstrukcja panelu do wypelnainia danych dla Zapotrzebowania*/
 
         jPanel1.setLayout(null);
         jPanel1.setBounds(0,0,szerPane,wysPane);
+        check.setBounds(5, 5, 50, 25);
+        jPanel1.add(check);
         lp.setText("Lp.");
-        lp.setBounds(5, 5, 30, 25);
+        lp.setBounds(30, 5, 30, 25);
         jPanel1.add(lp);
-        label_Ilosc.setText("Ilość elementów");
-        label_Ilosc.setBounds(35, 5, 100, 25);
+        label_Ilosc.setText("Ilość");
+        label_Ilosc.setBounds(60, 5, 50, 25);
         jPanel1.add(label_Ilosc);
-        label_dlugosc.setText("Długość elementów [mm]");
-        label_dlugosc.setBounds(135, 5, 200, 25);
+        label_dlugosc.setText("Długość [mm]");
+        label_dlugosc.setBounds(125, 5, 100, 25);
         jPanel1.add(label_dlugosc);
-        jPanel1.setPreferredSize(new Dimension(300, 500));
+        label_pozycja.setText("Pozycja");
+        label_pozycja.setBounds(235,5,80,25);
+        jPanel1.add(label_pozycja);
+        label_skos.setText("Skos");
+        label_skos.setBounds(320,5,40,25);
+        jPanel1.add(label_skos);  
+        label_skosKat.setText("Kąt");
+        label_skosKat.setBounds(360,5,40,25);
+        jPanel1.add(label_skosKat);
+        label_skosPlaszczyzna.setText("Pł. cięcia");
+        label_skosPlaszczyzna.setBounds(400,5,100,25);
+        jPanel1.add(label_skosPlaszczyzna);
+        label_skosK.setText("Skos");
+        label_skosK.setBounds(460,5,40,25);
+        jPanel1.add(label_skosK);  
+        label_skosKatK.setText("Kąt");
+        label_skosKatK.setBounds(500,5,40,25);
+        jPanel1.add(label_skosKatK);
+        label_skosPlaszczyznaK.setText("Pł. cięcia");
+        label_skosPlaszczyznaK.setBounds(540,5,100,25);
+        jPanel1.add(label_skosPlaszczyznaK);
+        jPanel1.setPreferredSize(new Dimension(szerPane, wysPane));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBounds(0, 0, 350, 500);
-        scrollPane.setPreferredSize(new Dimension(350, 500));
+        scrollPane.setBounds(0, 0, szerPane+50, wysPane);
+        scrollPane.setPreferredSize(new Dimension(szerPane+50, wysPane));
         jTabbedPane1.addTab("Zapotrzebowanie", scrollPane);
 
         jPanel2.setBounds(szerPane,0,200,wysPane);
         this.add(jTabbedPane1);
         this.add(jPanel2);
-        this.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel3MouseClicked(evt);
-            }
-        });
+
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -205,12 +308,42 @@ public class CiecieStali extends JFrame {
         });
         //pack();
     }
+    private void checkStateChanged(ActionEvent evt) {
+        if(check.isSelected())
+        {
+            for (int i = 0; i<vCheckBox.size(); i++)
+            {
+                vCheckBox.elementAt(i).setSelected(true);
+            }
+        }
+        else
+        {
+            for (int i = 0; i<vCheckBox.size(); i++)
+            {
+                vCheckBox.elementAt(i).setSelected(false);
+            }
+        }
+    }
+    private void checkMStateChanged(ActionEvent evt) {
+        if(checkM.isSelected())
+        {
+            for (int i = 0; i<vCheckBoxM.size(); i++)
+            {
+                vCheckBoxM.elementAt(i).setSelected(true);
+            }
+        }
+        else
+        {
+            for (int i = 0; i<vCheckBoxM.size(); i++)
+            {
+                vCheckBoxM.elementAt(i).setSelected(false);
+            }
+        }
+    }
     private void formWindowClosing(WindowEvent evt) {
         AktualizacjaLicencji.AktualizujPlik();
     }
-    private void jPanel3MouseClicked(MouseEvent evt) {
-       // AktualizacjaLicencji.AktualizujPlik();
-    }
+
     private void bDodajElemActionPerformed(ActionEvent evt)
     {
         AktualizacjaLicencji.AktualizujPlik();
@@ -218,7 +351,9 @@ public class CiecieStali extends JFrame {
     }
     private void bUsunOstatniActionPerformed(java.awt.event.ActionEvent evt) { 
         AktualizacjaLicencji.AktualizujPlik();
-        UsunPole();
+        UsunPoleCheckBox();
+        //SkasujWiersz(true,2);
+        //UsunPole();
     }                                            
 
     private void bImportDanychActionPerformed(java.awt.event.ActionEvent evt) throws IOException, BiffException {
@@ -248,33 +383,40 @@ public class CiecieStali extends JFrame {
        AktualizacjaLicencji.AktualizujPlik();
        Algorytm start = new Algorytm();
        start.vIlosc = this.vIlosc;
-       start.vIloscM = this.vIloscM;
        start.vDlugosc = this.vDlugosc;
+       start.vCheckBox = this.vCheckBox;
+       start.vPozycja = this.vPozycja;
+       start.vSkos = this.vSkos;
+       start.vSkosKat = this.vSkosKat;
+       start.vSkosPlaszczyzna = this.vSkosPlaszczyzna;
+       start.vSkosK = this.vSkosK;
+       start.vSkosKatK = this.vSkosKatK;
+       start.vSkosPlaszczyznaK = this.vSkosPlaszczyznaK;
+       start.vIloscM = this.vIloscM;
        start.vDlugoscM = this.vDlugoscM;
+       start.vGatunekM = this.vGatunekM;
+       start.PrzekrojX = parseInt(jPrzekrojX.getText());
+       start.PrzekrojY = parseInt(jPrzekrojY.getText());
        start.Algorytm();
     }
-    private void ilosc2MActionPerformed(java.awt.event.ActionEvent evt) {                                        
-        // TODO add your handling code here:
-    }                                       
-
-    private void dlugosc1MActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-    }                                         
-
-    private void ilosc2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        // TODO add your handling code here:
-    }                                      
-
-    private void dlugosc1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
+             
+                  
     private void DodajPole ()
     { 
+        System.out.println(jPanel1.getComponentCount());
         AktualizacjaLicencji.AktualizujPlik();
         JTextField pole2 = new JTextField();
-
         JLabel x = new JLabel("x");
         JTextField pole1 = new JTextField();
+        JTextField polePozycja = new JTextField();
+        JTextField poleSkos = new JTextField();
+        JTextField poleSkosKat = new JTextField();
+        JTextField poleSkosPlaszczyzna = new JTextField();
+        JTextField poleSkosK = new JTextField();
+        JTextField poleSkosKatK = new JTextField();
+        JTextField poleSkosPlaszczyznaK = new JTextField();
+        JTextField poleGatunek = new JTextField();
+        JCheckBox box = new JCheckBox();
         
         if(jTabbedPane1.getSelectedIndex()==0)
         {
@@ -285,16 +427,24 @@ public class CiecieStali extends JFrame {
                 //scrollPane.setSize(szerPane,30*iloscPolM+35);
                 jPanel3.setPreferredSize(new Dimension(szerPane,30*iloscPolM+35));
             }
-            lp.setBounds(5,30*iloscPolM+5,30,25);
+            box.setBounds(5,30*iloscPolM+5,20,25);
+            jPanel3.add(box);
+            vCheckBoxM.add(box);
+            lp.setBounds(30,30*iloscPolM+5,20,25);
             jPanel3.add(lp);
-            pole1.setBounds(35, 30*iloscPolM+5,80,25 );
+            vLpM.add(lp);
+            pole1.setBounds(55, 30*iloscPolM+5,50,25 );
             jPanel3.add(pole1);
             vIloscM.add(pole1); 
-            x.setBounds(120,30*iloscPolM+5,30,25);
+            x.setBounds(110,30*iloscPolM+5,15,25);
             jPanel3.add(x);
-            pole2.setBounds(135, 30*iloscPolM+5,200,25 );
+            vXM.add(x);
+            pole2.setBounds(120, 30*iloscPolM+5,100,25 );
             jPanel3.add(pole2);
             vDlugoscM.add(pole2);
+            poleGatunek.setBounds(235,30*iloscPolM+5,80,25);
+            jPanel3.add(poleGatunek);
+            vGatunekM.add(poleGatunek);
             jPanel3.revalidate();
             jPanel3.repaint();
         }
@@ -306,16 +456,42 @@ public class CiecieStali extends JFrame {
             {
                 jPanel1.setPreferredSize(new Dimension(szerPane,30*iloscPol+35));
             }
-            lp.setBounds(5,30*iloscPol+5,30,25);
+            box.setBounds(5,30*iloscPol+5,20,25);
+            jPanel1.add(box);
+            vCheckBox.add(box);
+            lp.setBounds(30,30*iloscPol+5,30,25);
             jPanel1.add(lp);
-            pole1.setBounds(35, 30*iloscPol+5,80,25 );
+            vLp.add(lp);
+            pole1.setBounds(55, 30*iloscPol+5,50,25 );
             jPanel1.add(pole1);
             vIlosc.add(pole1); 
-            x.setBounds(120,30*iloscPol+5,30,25);
+            x.setBounds(110,30*iloscPol+5,15,25);
             jPanel1.add(x);
-            pole2.setBounds(135, 30*iloscPol+5,200,25 );
+            vX.add(x);
+            pole2.setBounds(120, 30*iloscPol+5,100,25 );
             jPanel1.add(pole2);
             vDlugosc.add(pole2);
+            polePozycja.setBounds(235,30*iloscPol+5,70,25);
+            jPanel1.add(polePozycja);
+            vPozycja.add(polePozycja);
+            poleSkos.setBounds(315,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkos);
+            vSkos.add(poleSkos);
+            poleSkosKat.setBounds(355,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosKat);
+            vSkosKat.add(poleSkosKat);
+            poleSkosPlaszczyzna.setBounds(395,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosPlaszczyzna);
+            vSkosPlaszczyzna.add(poleSkosPlaszczyzna);
+            poleSkosK.setBounds(455,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosK);
+            vSkosK.add(poleSkosK);
+            poleSkosKatK.setBounds(495,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosKatK);
+            vSkosKatK.add(poleSkosKatK);
+            poleSkosPlaszczyznaK.setBounds(535,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosPlaszczyznaK);
+            vSkosPlaszczyznaK.add(poleSkosPlaszczyznaK);
             jPanel1.revalidate();
             jPanel1.repaint();
         }
@@ -370,55 +546,152 @@ public class CiecieStali extends JFrame {
                 }
             }
             });
+               poleSkosKat.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                if(!jestLiczba(evt.getKeyChar()))
+                    evt.consume();
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent evt){
+                if(evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_V)
+                {
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    String bufor ="";
+                    try {
+                        bufor = (String) clipboard.getData(DataFlavor.stringFlavor);
+                    } catch (UnsupportedFlavorException ex) {
+                        Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    for (int i=0; i < bufor.length(); i++)
+                        if(!jestLiczba(bufor.charAt(i)))
+                            evt.consume();
+                }
+            }
+            
+            });
+            poleSkosKatK.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                if(!jestLiczba(evt.getKeyChar()))
+                    evt.consume();
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent evt){
+                if(evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_V)
+                {
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    String bufor ="";
+                    try {
+                        bufor = (String) clipboard.getData(DataFlavor.stringFlavor);
+                    } catch (UnsupportedFlavorException ex) {
+                        Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    for (int i=0; i < bufor.length(); i++)
+                        if(!jestLiczba(bufor.charAt(i)))
+                            evt.consume();
+                }
+            }
+            
+            });
+               System.out.println(jPanel1.getComponentCount());
     }
-    private void DodajPole (boolean tab, String ilosc, String dlugosc)
+    private void DodajPole (boolean tab, String ilosc, String dlugosc, String pozycja, String skos, String skosKat, String skosPlaszczyzna, String skosK, String skosKatK, String skosPlaszczyznaK)
     { 
         AktualizacjaLicencji.AktualizujPlik();
         JTextField pole2 = new JTextField();
-
         JLabel x = new JLabel("x");
         JTextField pole1 = new JTextField();
+        JTextField polePozycja = new JTextField();
+        JTextField poleSkos = new JTextField();
+        JTextField poleSkosKat = new JTextField();
+        JTextField poleSkosPlaszczyzna = new JTextField();
+        JTextField poleGatunek = new JTextField();
+        JTextField poleSkosK = new JTextField();
+        JTextField poleSkosKatK = new JTextField();
+        JTextField poleSkosPlaszczyznaK = new JTextField();
+        JCheckBox box = new JCheckBox();
         
         if(tab==false)
         {
-            this.iloscPolM++;
+                    this.iloscPolM++;
             JLabel lp = new JLabel(""+iloscPolM+".");
             if(30*iloscPolM+5>470)
             {
                 //scrollPane.setSize(szerPane,30*iloscPolM+35);
                 jPanel3.setPreferredSize(new Dimension(szerPane,30*iloscPolM+35));
             }
-            lp.setBounds(5,30*iloscPolM+5,30,25);
+            box.setBounds(5,30*iloscPolM+5,20,25);
+            jPanel3.add(box);
+            vCheckBoxM.add(box);
+            lp.setBounds(30,30*iloscPolM+5,20,25);
             jPanel3.add(lp);
-            pole1.setBounds(35, 30*iloscPolM+5,80,25 );
+            vLpM.add(lp);
+            pole1.setBounds(55, 30*iloscPolM+5,50,25 );
             jPanel3.add(pole1);
             vIloscM.add(pole1); 
-            x.setBounds(120,30*iloscPolM+5,30,25);
+            x.setBounds(110,30*iloscPolM+5,15,25);
             jPanel3.add(x);
-            pole2.setBounds(135, 30*iloscPolM+5,200,25 );
+            vXM.add(x);
+            pole2.setBounds(120, 30*iloscPolM+5,100,25 );
             jPanel3.add(pole2);
             vDlugoscM.add(pole2);
+            poleGatunek.setBounds(235,30*iloscPolM+5,80,25);
+            jPanel3.add(poleGatunek);
+            vGatunekM.add(poleGatunek);
             jPanel3.revalidate();
             jPanel3.repaint();
         }
         else if (tab==true)
         {
-            this.iloscPol++;
+                        this.iloscPol++;
             JLabel lp = new JLabel(""+iloscPol+".");
             if(30*iloscPol+5>470)
             {
                 jPanel1.setPreferredSize(new Dimension(szerPane,30*iloscPol+35));
             }
-            lp.setBounds(5,30*iloscPol+5,30,25);
+           box.setBounds(5,30*iloscPol+5,20,25);
+            jPanel1.add(box);
+            vCheckBox.add(box);
+            lp.setBounds(30,30*iloscPol+5,30,25);
             jPanel1.add(lp);
-            pole1.setBounds(35, 30*iloscPol+5,80,25 );
+            vLp.add(lp);
+            pole1.setBounds(55, 30*iloscPol+5,50,25 );
             jPanel1.add(pole1);
             vIlosc.add(pole1); 
-            x.setBounds(120,30*iloscPol+5,30,25);
+            x.setBounds(110,30*iloscPol+5,15,25);
             jPanel1.add(x);
-            pole2.setBounds(135, 30*iloscPol+5,200,25 );
+            vX.add(x);
+            pole2.setBounds(120, 30*iloscPol+5,100,25 );
             jPanel1.add(pole2);
             vDlugosc.add(pole2);
+            polePozycja.setBounds(235,30*iloscPol+5,70,25);
+            jPanel1.add(polePozycja);
+            vPozycja.add(polePozycja);
+            poleSkos.setBounds(315,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkos);
+            vSkos.add(poleSkos);
+            poleSkosKat.setBounds(355,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosKat);
+            vSkosKat.add(poleSkosKat);
+            poleSkosPlaszczyzna.setBounds(395,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosPlaszczyzna);
+            vSkosPlaszczyzna.add(poleSkosPlaszczyzna);
+            poleSkosK.setBounds(455,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosK);
+            vSkosK.add(poleSkosK);
+            poleSkosKatK.setBounds(495,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosKatK);
+            vSkosKatK.add(poleSkosKatK);
+            poleSkosPlaszczyznaK.setBounds(535,30*iloscPol+5,40,25);
+            jPanel1.add(poleSkosPlaszczyznaK);
+            vSkosPlaszczyznaK.add(poleSkosPlaszczyznaK);
             jPanel1.revalidate();
             jPanel1.repaint();
         }
@@ -446,6 +719,7 @@ public class CiecieStali extends JFrame {
                             evt.consume();
                 }
             }
+            
             });
         
         pole2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -472,88 +746,225 @@ public class CiecieStali extends JFrame {
                 }
             }
             });
+               poleSkosKat.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                if(!jestLiczba(evt.getKeyChar()))
+                    evt.consume();
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent evt){
+                if(evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_V)
+                {
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    String bufor ="";
+                    try {
+                        bufor = (String) clipboard.getData(DataFlavor.stringFlavor);
+                    } catch (UnsupportedFlavorException ex) {
+                        Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    for (int i=0; i < bufor.length(); i++)
+                        if(!jestLiczba(bufor.charAt(i)))
+                            evt.consume();
+                }
+            }
+            
+            });
+             poleSkosKatK.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                if(!jestLiczba(evt.getKeyChar()))
+                    evt.consume();
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent evt){
+                if(evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_V)
+                {
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    String bufor ="";
+                    try {
+                        bufor = (String) clipboard.getData(DataFlavor.stringFlavor);
+                    } catch (UnsupportedFlavorException ex) {
+                        Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    for (int i=0; i < bufor.length(); i++)
+                        if(!jestLiczba(bufor.charAt(i)))
+                            evt.consume();
+                }
+            }
+            
+            });
         pole1.setText(ilosc);
         pole2.setText(dlugosc);
-    }
+        polePozycja.setText(pozycja);
+        poleSkos.setText(skos);
+        poleSkosKat.setText(skosKat);
+        poleSkosPlaszczyzna.setText(skosPlaszczyzna);
+        poleSkosK.setText(skosK);
+        poleSkosKatK.setText(skosKatK);
+        poleSkosPlaszczyznaK.setText(skosPlaszczyznaK);
+        poleGatunek.setText(pozycja);
+     }
     
     private boolean jestLiczba(char znak)
     {
        // AktualizacjaLicencji.AktualizujPlik();
         return (znak>='0' && znak<='9');
     }
-    private void UsunPole()
+    private void UsunPoleCheckBox()
     {
-        AktualizacjaLicencji.AktualizujPlik();
-        if(jTabbedPane1.getSelectedIndex()==0 && jPanel3.getComponentCount()>4)
-        {
-            iloscPolM--;
-            for (int i=0;i<4;i++)
-                jPanel3.remove(jPanel3.getComponentCount()-1);
-            jPanel3.revalidate();
-            jPanel3.repaint();
-            System.out.println(vIloscM.size());
-            vIloscM.removeElementAt(vIloscM.size()-1);
-            vDlugoscM.removeElementAt(vDlugoscM.size()-1);
-            System.out.println(vIloscM.size());
+        if(jTabbedPane1.getSelectedIndex()==0)
+            for(int i =vCheckBoxM.size() -1; i>=0 ; i--)
+            {
+                if (vCheckBoxM.elementAt(i).isSelected())
+                {
 
+                    for (int j = iloscPolM-1; j>i; j--)
+                    {
+                        vIloscM.elementAt(j).setLocation(vIloscM.elementAt(j-1).getLocation());
+                        vDlugoscM.elementAt(j).setLocation(vDlugoscM.elementAt(j-1).getLocation());
+                        vGatunekM.elementAt(j).setLocation(vGatunekM.elementAt(j-1).getLocation());
+                        vCheckBoxM.elementAt(j).setLocation(vCheckBoxM.elementAt(j-1).getLocation());
+                    }
+                    SkasujWiersz(false,i);
+                    iloscPolM--;
+                }
+                jPanel3.revalidate();
+                jPanel3.repaint();
+            }
+        else
+            for(int i =vCheckBox.size() -1; i>=0 ; i--)
+            {
+                if (vCheckBox.elementAt(i).isSelected())
+                {
+
+                    for (int j = iloscPol-1; j>i; j--)
+                    {
+                        vIlosc.elementAt(j).setLocation(vIlosc.elementAt(j-1).getLocation());
+                        vDlugosc.elementAt(j).setLocation(vDlugosc.elementAt(j-1).getLocation());
+                        vPozycja.elementAt(j).setLocation(vPozycja.elementAt(j-1).getLocation());
+                        vSkos.elementAt(j).setLocation(vSkos.elementAt(j-1).getLocation());
+                        vSkosPlaszczyzna.elementAt(j).setLocation(vSkosPlaszczyzna.elementAt(j-1).getLocation());
+                        vSkosKat.elementAt(j).setLocation(vSkosKat.elementAt(j-1).getLocation());
+                        vSkosK.elementAt(j).setLocation(vSkosK.elementAt(j-1).getLocation());
+                        vSkosPlaszczyznaK.elementAt(j).setLocation(vSkosPlaszczyznaK.elementAt(j-1).getLocation());
+                        vSkosKatK.elementAt(j).setLocation(vSkosKatK.elementAt(j-1).getLocation());
+                        vCheckBox.elementAt(j).setLocation(vCheckBox.elementAt(j-1).getLocation());
+                    }
+                    SkasujWiersz(true,i);
+                    iloscPol--;
+                }
+                jPanel1.revalidate();
+                jPanel1.repaint();
+            }
+    }
+    private void UsunPoleCheckBox(boolean tab)
+    {
+        if(tab==false)
+            for(int i =vCheckBoxM.size() -1; i>=0 ; i--)
+            {
+                if (vCheckBoxM.elementAt(i).isSelected())
+                {
+
+                    for (int j = iloscPolM-1; j>i; j--)
+                    {
+                        vIloscM.elementAt(j).setLocation(vIloscM.elementAt(j-1).getLocation());
+                        vDlugoscM.elementAt(j).setLocation(vDlugoscM.elementAt(j-1).getLocation());
+                        vGatunekM.elementAt(j).setLocation(vGatunekM.elementAt(j-1).getLocation());
+                        vCheckBoxM.elementAt(j).setLocation(vCheckBoxM.elementAt(j-1).getLocation());
+                    }
+                    SkasujWiersz(false,i);
+                    iloscPolM--;
+                }
+                jPanel3.revalidate();
+                jPanel3.repaint();
+            }
+        else
+            for(int i =vCheckBox.size() -1; i>=0 ; i--)
+            {
+                if (vCheckBox.elementAt(i).isSelected())
+                {
+
+                    for (int j = iloscPol-1; j>i; j--)
+                    {
+                        vIlosc.elementAt(j).setLocation(vIlosc.elementAt(j-1).getLocation());
+                        vDlugosc.elementAt(j).setLocation(vDlugosc.elementAt(j-1).getLocation());
+                        vPozycja.elementAt(j).setLocation(vPozycja.elementAt(j-1).getLocation());
+                        vSkosK.elementAt(j).setLocation(vSkosK.elementAt(j-1).getLocation());
+                        vSkosPlaszczyznaK.elementAt(j).setLocation(vSkosPlaszczyznaK.elementAt(j-1).getLocation());
+                        vSkosKatK.elementAt(j).setLocation(vSkosKatK.elementAt(j-1).getLocation());
+                        vCheckBox.elementAt(j).setLocation(vCheckBox.elementAt(j-1).getLocation());
+                    }
+                    SkasujWiersz(true,i);
+                    iloscPol--;
+                }
+                jPanel1.revalidate();
+                jPanel1.repaint();
+            }
+    }
+     private void SkasujWiersz(boolean tab, int index)
+    {
+        if (tab==false)
+        {
+            jPanel3.remove(vIloscM.elementAt(index));
+            jPanel3.remove(vDlugoscM.elementAt(index));
+            jPanel3.remove(vGatunekM.elementAt(index));
+            jPanel3.remove(vCheckBoxM.elementAt(index));
+            jPanel3.remove(vXM.elementAt(vXM.size()-1));
+            jPanel3.remove(vLpM.elementAt(vLpM.size()-1));
+            vIloscM.removeElementAt(index);
+            vDlugoscM.removeElementAt(index);
+            vGatunekM.removeElementAt(index);
+            vCheckBoxM.removeElementAt(index);
+            vXM.removeElementAt(vXM.size()-1);
+            vLpM.removeElementAt(vLpM.size()-1);
         }
-        else if (jTabbedPane1.getSelectedIndex()==1 && jPanel1.getComponentCount()>4)
+        else if (tab==true)
         {
-            iloscPol--;
-            for (int i=0;i<4;i++)
-                jPanel1.remove(jPanel1.getComponentCount()-1);
-            jPanel1.revalidate();
-            jPanel1.repaint();
-            System.out.println(vIlosc.size());
-            vIlosc.removeElementAt(vIlosc.size()-1);
-            vDlugosc.removeElementAt(vDlugosc.size()-1);
-            System.out.println(vIlosc.size());
-
+            jPanel1.remove(vIlosc.elementAt(index));
+            jPanel1.remove(vDlugosc.elementAt(index));
+            jPanel1.remove(vSkos.elementAt(index));
+            jPanel1.remove(vSkosKat.elementAt(index));
+            jPanel1.remove(vSkosPlaszczyzna.elementAt(index));
+            jPanel1.remove(vSkosK.elementAt(index));
+            jPanel1.remove(vSkosKatK.elementAt(index));
+            jPanel1.remove(vSkosPlaszczyznaK.elementAt(index));
+            jPanel1.remove(vPozycja.elementAt(index));
+            jPanel1.remove(vCheckBox.elementAt(index));
+            jPanel1.remove(vX.elementAt(vX.size()-1));
+            jPanel1.remove(vLp.elementAt(vLp.size()-1));
+            vIlosc.removeElementAt(index);
+            vDlugosc.removeElementAt(index);
+            vSkos.removeElementAt(index);
+            vSkosKat.removeElementAt(index);
+            vSkosPlaszczyzna.removeElementAt(index);
+            vSkosK.removeElementAt(index);
+            vSkosKatK.removeElementAt(index);
+            vSkosPlaszczyznaK.removeElementAt(index);
+            vPozycja.removeElementAt(index);
+            vCheckBox.removeElementAt(index);
+            vX.removeElementAt(vX.size()-1);
+            vLp.removeElementAt(vLp.size()-1);
         }
     }
-    private void UsunPole(boolean tab)
-    {
-        AktualizacjaLicencji.AktualizujPlik();
-        System.out.println("comp"+jPanel1.getComponentCount());
-        if(tab==false && jPanel3.getComponentCount()>4)
-        {
-            iloscPolM--;
-            for (int i=0;i<4;i++)
-                jPanel3.remove(jPanel3.getComponentCount()-1);
-            jPanel3.revalidate();
-            jPanel3.repaint();
-            System.out.println(vIloscM.size());
-            vIloscM.removeElementAt(vIloscM.size()-1);
-            vDlugoscM.removeElementAt(vDlugoscM.size()-1);
-            System.out.println(vIloscM.size());
 
-        }
-        else if (tab==true && jPanel1.getComponentCount()>4)
-        {
-            iloscPol--;
-            for (int i=0;i<4;i++)
-                jPanel1.remove(jPanel1.getComponentCount()-1);
-            jPanel1.revalidate();
-            jPanel1.repaint();
-            System.out.println(vIlosc.size());
-            vIlosc.removeElementAt(vIlosc.size()-1);
-            vDlugosc.removeElementAt(vDlugosc.size()-1);
-            System.out.println(vIlosc.size());
-
-        }
-    }
     private void UsunPola()
     {
         AktualizacjaLicencji.AktualizujPlik();
-        int size=vIlosc.size();
-        for (int i =0; i<size;i++)
-        {
-            System.out.println(vIlosc.size());
-            UsunPole(true);
-        }
-        for (int i =0; i<vIloscM.size();i++)
-            UsunPole(false);
-            
+        for (int i =0; i<=vCheckBoxM.size()-1;i++)
+            vCheckBoxM.elementAt(i).setSelected(true);
+        for (int i =0; i<=vCheckBox.size()-1;i++)
+            vCheckBox.elementAt(i).setSelected(true);
+        
+        UsunPoleCheckBox(false);
+        UsunPoleCheckBox(true);
+        
     }
     private void WyczyscPola()
     {
@@ -562,11 +973,19 @@ public class CiecieStali extends JFrame {
         {
             vIlosc.elementAt(i).setText("");
             vDlugosc.elementAt(i).setText("");
+            vSkos.elementAt(i).setText("");
+            vSkosKat.elementAt(i).setText("");
+            vSkosPlaszczyzna.elementAt(i).setText("");
+            vSkosK.elementAt(i).setText("");
+            vSkosKatK.elementAt(i).setText("");
+            vSkosPlaszczyznaK.elementAt(i).setText("");
+            vPozycja.elementAt(i).setText("");
         }
         for(int i=0; i<vIloscM.size();i++)
         {
             vIloscM.elementAt(i).setText("");
             vDlugoscM.elementAt(i).setText("");
+            vGatunekM.elementAt(i).setText("");
         }
     }
 
@@ -579,16 +998,38 @@ public class CiecieStali extends JFrame {
         Sheet s = wb.getSheet(0);
         int row = s.getRows();
         int col = s.getColumns();
-        for (int i =2; i<row;i++)
+        jMaterial.setText(s.getCell(0,1).getContents());
+        jInwestycja.setText(s.getCell(1,1).getContents());
+        jPrzekrojX.setText(s.getCell(2,1).getContents());
+        jPrzekrojY.setText(s.getCell(3,1).getContents());
+
+        for (int i =6; i<row;i++)
         {
-            
             if(!s.getCell(0,i).getContents().equals("")&&!s.getCell(1,i).getContents().equals(""))
             {
-                DodajPole(false,s.getCell(0,i).getContents(),s.getCell(1,i).getContents());
+                DodajPole(false,
+                        s.getCell(0,i).getContents(),
+                        s.getCell(1,i).getContents(),
+                        s.getCell(2,i).getContents()
+                        ,""
+                        ,""
+                        ,""
+                        ,""
+                        ,""
+                        ,"");
             }
-            if(!s.getCell(2,i).getContents().equals("")&&!s.getCell(3,i).getContents().equals(""))
+            if(!s.getCell(3,i).getContents().equals("")&&!s.getCell(4,i).getContents().equals(""))
             {
-                DodajPole(true,s.getCell(2,i).getContents(),s.getCell(3,i).getContents());
+                DodajPole(true,
+                        s.getCell(3,i).getContents(),
+                        s.getCell(4,i).getContents(),
+                        s.getCell(5,i).getContents(),
+                        s.getCell(6,i).getContents(),
+                        s.getCell(7,i).getContents(),
+                        s.getCell(8,i).getContents(),
+                        s.getCell(9,i).getContents(),
+                        s.getCell(10,i).getContents(),
+                        s.getCell(11,i).getContents());
             }
         }
     }
@@ -627,20 +1068,18 @@ public class CiecieStali extends JFrame {
         AktualizacjaLicencji.AktualizujPlik();
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify  
+    public int PrzekrojX;
+    public int PrzekrojY;
     private javax.swing.JButton bDodajElem;
     private javax.swing.JButton bImportDanych;
     private javax.swing.JButton bUsunOstatni;
     private javax.swing.JButton bWyczysc;
     private javax.swing.JButton bWyznacz;
-    public javax.swing.JTextField dlugosc1;
-    public javax.swing.JTextField dlugosc1M;
-    public javax.swing.JTextField dlugosc2;
-    public javax.swing.JTextField dlugosc2M;
-    public javax.swing.JTextField ilosc1;
-    public javax.swing.JTextField ilosc1M;
-    public javax.swing.JTextField ilosc2;
-    public javax.swing.JTextField ilosc2M;
+    private JTextField jMaterial;
+    private JTextField jInwestycja;
+    public JTextField jPrzekrojX;
+    public JTextField jPrzekrojY;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
@@ -651,6 +1090,17 @@ public class CiecieStali extends JFrame {
     private javax.swing.JLabel label_IloscM;
     private javax.swing.JLabel label_dlugosc;
     private javax.swing.JLabel label_dlugoscM;
+    private JLabel label_pozycja;
+    private JLabel label_skos;
+    private JLabel label_skosPlaszczyzna;
+    private JLabel label_skosKat;
+    private JLabel label_skosK;
+    private JLabel label_skosPlaszczyznaK;
+    private JLabel label_skosKatK;
+    private JLabel label_gatunekM;
+    private JLabel label_material;
+    private JLabel label_inwestycja;
+    private JLabel label_przekroj;
     private javax.swing.JLabel lp;
     private javax.swing.JLabel lpM;
     private javax.swing.JLabel num1;
@@ -661,6 +1111,8 @@ public class CiecieStali extends JFrame {
     private javax.swing.JLabel x1M;
     private javax.swing.JLabel x2;
     private javax.swing.JLabel x2M;
+    private JCheckBox check;
+    private JCheckBox checkM;
     public JScrollPane scrollPane;
     public JScrollPane scrollPaneM;
     public JFileChooser filePath;
@@ -728,3 +1180,87 @@ class AktualizacjaLicencji {
 
     }
 }
+class Prostokat extends Component {
+    
+    public Prostokat(){
+        repaint();
+    }
+    @Override
+  public void paint(Graphics g) {
+        g.drawRect(125, 0, 100, 10);
+        g.setColor(Color.BLUE);
+        g.fillRect(125, 0, 100, 10);
+  }
+
+}
+
+/*stary nieuzywany kod
+
+
+    private void UsunPole()
+    {
+        AktualizacjaLicencji.AktualizujPlik();
+        if(jTabbedPane1.getSelectedIndex()==0 && jPanel3.getComponentCount()>5)
+        {
+            iloscPolM--;
+            for (int i=0;i<6;i++)
+                jPanel3.remove(jPanel3.getComponentCount()-1);
+            jPanel3.revalidate();
+            jPanel3.repaint();
+            vIloscM.removeElementAt(vIloscM.size()-1);
+            vDlugoscM.removeElementAt(vDlugoscM.size()-1);
+            vGatunekM.removeElementAt(vGatunekM.size()-1);
+            vCheckBoxM.removeElementAt(vCheckBoxM.size()-1);
+
+        }
+        else if (jTabbedPane1.getSelectedIndex()==1 && jPanel1.getComponentCount()>8)
+        {
+            iloscPol--;
+            for (int i=0;i<9;i++)
+                jPanel1.remove(jPanel1.getComponentCount()-1);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+            vIlosc.removeElementAt(vIlosc.size()-1);
+            vDlugosc.removeElementAt(vDlugosc.size()-1);
+            vSkos.removeElementAt(vSkos.size()-1);
+            vSkosKat.removeElementAt(vSkosKat.size()-1);
+            vSkosPlaszczyzna.removeElementAt(vSkosPlaszczyzna.size()-1);
+            vPozycja.removeElementAt(vPozycja.size()-1);
+            vCheckBox.removeElementAt(vCheckBox.size()-1);
+        }
+    }
+    private void UsunPole(boolean tab)
+    {
+        AktualizacjaLicencji.AktualizujPlik();
+        System.out.println("comp"+jPanel1.getComponentCount());
+        if(tab==false && jPanel3.getComponentCount()>5)
+        {
+            iloscPolM--;
+            for (int i=0;i<6;i++)
+                jPanel3.remove(jPanel3.getComponentCount()-1);
+            jPanel3.revalidate();
+            jPanel3.repaint();
+            vIloscM.removeElementAt(vIloscM.size()-1);
+            vDlugoscM.removeElementAt(vDlugoscM.size()-1);
+            vGatunekM.removeElementAt(vGatunekM.size()-1);
+            vCheckBoxM.removeElementAt(vCheckBoxM.size()-1);
+            
+        }
+        else if (tab==true && jPanel1.getComponentCount()>8)
+        {
+            iloscPol--;
+            for (int i=0;i<9;i++)
+                jPanel1.remove(jPanel1.getComponentCount()-1);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+            vIlosc.removeElementAt(vIlosc.size()-1);
+            vDlugosc.removeElementAt(vDlugosc.size()-1);
+            vSkos.removeElementAt(vSkos.size()-1);
+            vSkosKat.removeElementAt(vSkosKat.size()-1);
+            vSkosPlaszczyzna.removeElementAt(vSkosPlaszczyzna.size()-1);
+            vPozycja.removeElementAt(vPozycja.size()-1);
+            vCheckBox.removeElementAt(vCheckBox.size()-1);
+
+        }
+    }
+*/

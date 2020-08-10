@@ -5,6 +5,8 @@
  */
 package algorytm;
 
+import java.util.Vector;
+
 /**
  *
  * @author Kuba
@@ -18,10 +20,23 @@ public class Element {
     String skos;
     String skosRodzaj;
     String skosKat;
-    String pozycja;
+    String skosK;
+    String skosRodzajK;
+    String skosKatK;
+    String pozycjaG;
     boolean skosPoziom;
     boolean skosPion;
+    boolean skosPoziomK;
+    boolean skosPionK;
+    boolean podwojnySkos;
+    Vector<Element> vElementy;
     public Element()
     {
+        vElementy = new Vector();
+        skosPoziom = false;
+        skosPion = false;
+        skosPoziomK = false;
+        skosPionK = false;
+        podwojnySkos = false;
     }
 }
