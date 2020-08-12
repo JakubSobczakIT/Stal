@@ -37,6 +37,7 @@ import jxl.Cell;
 import jxl.Workbook;
 import jxl.Sheet;
 import jxl.read.biff.BiffException;
+import jxl.write.WriteException;
 
 
 /**
@@ -66,12 +67,17 @@ public class CiecieStali extends JFrame {
     public Vector<JLabel> vXM;
     
     File plikXls;
+    public String Material;
+    public String Inwestycja;
+    
     private int iloscPol =0;
     private int iloscPolM =0;
     private int szerPane = 650;
     private int wysPane = 500;
     public CiecieStali() {
         super("CięcieStali");
+        PrzekrojX=0;
+        PrzekrojY=0;
         vIlosc = new Vector();
         vDlugosc = new Vector();
         vPozycja = new Vector();
@@ -156,7 +162,7 @@ public class CiecieStali extends JFrame {
                bDodajElemActionPerformed(evt);
             }
         });
-        bUsunOstatni.setText("Usuń uostatni element");
+        bUsunOstatni.setText("Usuń wybrane elementy");
         bUsunOstatni.setBounds(szerPane+60,65,170,25);
         jPanel2.add(bUsunOstatni);
         bUsunOstatni.addActionListener(new java.awt.event.ActionListener() {
@@ -164,9 +170,9 @@ public class CiecieStali extends JFrame {
                 bUsunOstatniActionPerformed(evt);
             }
         });
-        bWyczysc.setText("Wyczyść dane z aplikacji");
-        bWyczysc.setBounds(szerPane+60,105,170,25);
-        jPanel2.add(bWyczysc);
+//        bWyczysc.setText("Wyczyść dane z aplikacji");
+//        bWyczysc.setBounds(szerPane+60,105,170,25);
+//        jPanel2.add(bWyczysc);
         bWyczysc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bWyczyscActionPerformed(evt);
@@ -174,7 +180,8 @@ public class CiecieStali extends JFrame {
         });
 
         bImportDanych.setText("Importuj z .xls");
-        bImportDanych.setBounds(szerPane+60,145,170,25);
+        bImportDanych.setBounds(szerPane+60,105,170,25);
+//        bImportDanych.setBounds(szerPane+60,145,170,25);
         jPanel2.add(bImportDanych);
         bImportDanych.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,12 +197,18 @@ public class CiecieStali extends JFrame {
 
 
 
-        bWyznacz.setText("Wyznacz cięcia");
+        bWyznacz.setText("Wykonaj rozkrój");
         bWyznacz.setBounds(szerPane+60,300,170,50);
         jPanel2.add(bWyznacz);
         bWyznacz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bWyznaczActionPerformed(evt);
+                try {
+                    bWyznaczActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (WriteException ex) {
+                    Logger.getLogger(CiecieStali.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         checkM.addActionListener(new java.awt.event.ActionListener() {
@@ -293,7 +306,7 @@ public class CiecieStali extends JFrame {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(0, 0, szerPane+50, wysPane);
         scrollPane.setPreferredSize(new Dimension(szerPane+50, wysPane));
-        jTabbedPane1.addTab("Zapotrzebowanie", scrollPane);
+        jTabbedPane1.addTab("Pozycje do rozkroju", scrollPane);
 
         jPanel2.setBounds(szerPane,0,200,wysPane);
         this.add(jTabbedPane1);
@@ -378,7 +391,7 @@ public class CiecieStali extends JFrame {
         AktualizacjaLicencji.AktualizujPlik();
         WyczyscPola();
     }                                        
-    private void bWyznaczActionPerformed(ActionEvent evt)
+    private void bWyznaczActionPerformed(ActionEvent evt) throws IOException, WriteException
     {
        AktualizacjaLicencji.AktualizujPlik();
        Algorytm start = new Algorytm();
@@ -395,8 +408,12 @@ public class CiecieStali extends JFrame {
        start.vIloscM = this.vIloscM;
        start.vDlugoscM = this.vDlugoscM;
        start.vGatunekM = this.vGatunekM;
-       start.PrzekrojX = parseInt(jPrzekrojX.getText());
-       start.PrzekrojY = parseInt(jPrzekrojY.getText());
+        if(!jPrzekrojX.getText().equals(""))
+            start.PrzekrojX = parseInt(jPrzekrojX.getText());
+        if(!jPrzekrojY.getText().equals(""))
+            start.PrzekrojY = parseInt(jPrzekrojY.getText());
+       start.Material = jMaterial.getText();
+       start.Inwestycja = jInwestycja.getText();
        start.Algorytm();
     }
              
@@ -998,8 +1015,8 @@ public class CiecieStali extends JFrame {
         Sheet s = wb.getSheet(0);
         int row = s.getRows();
         int col = s.getColumns();
-        jMaterial.setText(s.getCell(0,1).getContents());
-        jInwestycja.setText(s.getCell(1,1).getContents());
+        jMaterial.setText(s.getCell(1,1).getContents());
+        jInwestycja.setText(s.getCell(0,1).getContents());
         jPrzekrojX.setText(s.getCell(2,1).getContents());
         jPrzekrojY.setText(s.getCell(3,1).getContents());
 
